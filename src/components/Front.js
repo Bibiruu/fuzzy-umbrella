@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 
-import TaskList from 'components/TaskList';
-import TaskForm from 'components/TaskForm';
+import { TaskList } from 'components/TaskList';
+import { TaskForm } from 'components/TaskForm';
 
-export const App = () => {
+export const Front = () => {
   const [taskList, setTaskList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [newTodo, setNewTodo] = useState('');
 
   useEffect(() => {
+    // eslint-disable-next-line no-use-before-define
     fetchTasks();
   }, []);
 
@@ -45,7 +46,7 @@ export const App = () => {
   }
 
   return (
-    <div>
+    <div className="container">
       <TaskForm
         newTodo={newTodo}
         onNewTodoChange={handleNewTodoChange}
@@ -55,5 +56,6 @@ export const App = () => {
         taskList={taskList}
         setTaskList={setTaskList} />
     </div>
+
   );
 }
