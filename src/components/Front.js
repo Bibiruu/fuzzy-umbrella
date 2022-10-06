@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 
-import { TaskList } from 'components/TaskList';
-import { TaskForm } from 'components/TaskForm';
+import { TaskList } from 'components/TaskList';// import thought list
+import { NewThought } from 'components/NewThought';// import the input
 
 export const Front = () => {
-  const [taskList, setTaskList] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [newTodo, setNewTodo] = useState('');
+  const [thoughtList, setThoughtList] = useState([]);// usestate for empty array
+  const [loading, setLoading] = useState(false);// loading check
+  const [newThought, setNewThought] = useState('');// setting new thought for empty string
 
   useEffect(() => {
     // eslint-disable-next-line no-use-before-define
@@ -17,16 +17,16 @@ export const Front = () => {
     setLoading(true);
     fetch('https://week7-backend.herokuapp.com/tasks')
       .then((res) => res.json())
-      .then((data) => setTaskList(data))
+      .then((data) => setThoughtList(data))
       .catch((error) => console.error(error))
       .finally(() => setLoading(false));
   }
 
-  const handleNewTodoChange = (event) => {
-    setNewTodo(event.target.value)
+  const handleNewTodoChange = (event) => { // taking a value and setting the thought for submission
+    setNewThought(event.target.value)
   }
 
-  const onFormSubmit = (event) => {
+  const onFormSubmit = (event) => { // prevention of rerender
     event.preventDefault();
 
     const options = {
@@ -35,26 +35,26 @@ export const Front = () => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        description: newTodo
+        description: newThought
       })
     }
 
     fetch('https://week7-backend.herokuapp.com/tasks', options)
       .then((res) => res.json())
       .then(() => fetchTasks())
-      .finally(() => setNewTodo(''));
+      .finally(() => setNewThought(''));
   }
 
   return (
-    <div className="container">
-      <TaskForm
-        newTodo={newTodo}
-        onNewTodoChange={handleNewTodoChange}
+    <div>
+      <NewThought
+        newThought={newThought}// the text box input
+        onNewTodoThought={handleNewTodoChange}// taking the thought
         onFormSubmit={onFormSubmit} />
       <TaskList
         loading={loading}
-        taskList={taskList}
-        setTaskList={setTaskList} />
+        thoughtList={thoughtList}
+        setThoughtList={setThoughtList} />
     </div>
 
   );
