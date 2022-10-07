@@ -3,15 +3,10 @@ import React, { useState, useEffect } from 'react';
 import { TaskList } from 'components/TaskList';// import thought list
 import { NewThought } from 'components/NewThought';// import the input
 
-export const Front = () => {
+export const Container = () => {
   const [thoughtList, setThoughtList] = useState([]);// usestate for empty array
   const [loading, setLoading] = useState(false);// loading check
   const [newThought, setNewThought] = useState('');// setting new thought for empty string
-
-  useEffect(() => {
-    // eslint-disable-next-line no-use-before-define
-    fetchTasks();
-  }, []);
 
   const fetchTasks = () => {
     setLoading(true);
@@ -22,6 +17,11 @@ export const Front = () => {
       .finally(() => setLoading(false));
   }
 
+  useEffect(() => {
+    // eslint-disable-next-line no-use-before-define
+    fetchTasks();
+  }, []);// needing the square brackets for listening to the mount
+
   const handleNewTodoChange = (event) => { // taking a value and setting the thought for submission
     setNewThought(event.target.value)
   }
@@ -29,8 +29,8 @@ export const Front = () => {
   const onFormSubmit = (event) => { // prevention of rerender
     event.preventDefault();
 
-    const options = {
-      method: 'POST',
+    const options = { // creating a thought
+      method: 'POST', // post request
       headers: {
         'Content-Type': 'application/json'
       },
@@ -39,7 +39,7 @@ export const Front = () => {
       })
     }
 
-    fetch('https://week7-backend.herokuapp.com/tasks', options)
+    fetch('https://week7-backend.herokuapp.com/tasks', options) // adding options after api, for post req.
       .then((res) => res.json())
       .then(() => fetchTasks())
       .finally(() => setNewThought(''));

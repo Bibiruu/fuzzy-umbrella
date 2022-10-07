@@ -12,6 +12,7 @@ body {
   background-color: pink;
   display: grid;
   place-items: center;
+  margin: 20px;
 }
 
 code {
@@ -29,7 +30,7 @@ code {
   align-content: left;
   align-items: left;
   justify-items: left;
- 
+  margin-bottom: 25px;
   text-align: left;
   background-color: rgb(240, 235, 236);
 }
@@ -38,6 +39,8 @@ code {
   border: solid;
   text-align: left;
   box-shadow: 5px 10px;
+  width: 500px;
+  height: 150px;
 }
 
 .button{

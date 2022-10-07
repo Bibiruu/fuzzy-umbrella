@@ -1,10 +1,10 @@
 import React from 'react'
-import { Front } from './components/Front'
+import { Container } from './components/Container'
 
 export const App = () => {
   return (
     <div>
-      <Front />
+      <Container />
     </div>
   )
 }
