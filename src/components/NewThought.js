@@ -2,7 +2,7 @@ import React from 'react';
 
 export const NewThought = ({ newThought, onNewTodoThought, onFormSubmit }) => {
   return (
-    <form className="form" onSubmit={onFormSubmit}>
+    <form className="form border-solid" onSubmit={onFormSubmit}>
       <h4 className="m-4">Whats making you happy right now?</h4>
       <textarea className="input m-5 w-5/6" value={newThought} onChange={onNewTodoThought} />
       <button className="button m-5 rounded-full" type="submit">

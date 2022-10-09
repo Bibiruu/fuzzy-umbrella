@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
-import { TaskList } from 'components/TaskList';// import thought list
-import { NewThought } from 'components/NewThought';// import the input
-
-// const likeApi = (likeId) => `https://happy-thoughts-technigo.herokuapp.com/thoughts/${likeId}/like`
+import { TaskList } from './TaskList';// import thought list
+import { NewThought } from './NewThought';// import the input
 
 export const Container = () => {
   const [thoughtList, setThoughtList] = useState([]);// usestate for empty array
@@ -19,8 +17,8 @@ export const Container = () => {
       .finally(() => setLoading(false));
   }
 
-  const appendThought = (thought) => {
-    setThoughtList((current) => [thought, ...current]);
+  const appendThought = (thought) => { // create a new thought
+    setThoughtList((current) => [thought, ...current]); // list form appending new to old
   }
 
   useEffect(() => {
@@ -32,11 +30,11 @@ export const Container = () => {
     setNewThought(event.target.value)
   }
 
-  const onFormSubmit = (event) => { // prevention of rerender
+  const onFormSubmit = async (event) => { // prevention of rerender
     event.preventDefault();
 
     const options = { // creating a thought
-      method: 'POST', // post request
+      method: 'POST', // posting it to the request
       headers: {
         'Content-Type': 'application/json'
       },
@@ -45,11 +43,11 @@ export const Container = () => {
       })
     }
 
-    fetch('https://happy-thoughts-technigo.herokuapp.com/thoughts', options) // adding options after api, for post req.
+    appendThought(await fetch('https://happy-thoughts-technigo.herokuapp.com/thoughts', options) // adding options after api, for post req.
       .then((res) => {
-        appendThought(res.json())
+        return res.json()
       })
-      .finally(() => setNewThought(''))
+      .finally(() => setNewThought('')))
   }
 
   return (
