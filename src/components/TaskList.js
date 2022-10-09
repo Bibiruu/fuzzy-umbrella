@@ -1,29 +1,18 @@
 import React from 'react';
-import { formatRelative } from 'date-fns'
+import moment from 'moment'
 
-export const TaskList = ({ loading, thoughtList, setThoughtList }) => {
+export const TaskList = ({ loading, thoughtList }) => {
   if (loading) {
     return <h1>Loading in progress...</h1>
   }
 
-  const onTaskCheckChange = (task) => {
-    setThoughtList((thoughtList) => thoughtList.map((singleTask) => {
-      if (singleTask._id === task._id) {
-        return {
-          ...singleTask, isChecked: !singleTask.isChecked
-        };
-      }
-      return singleTask;
-    }));
-  }
-
   return (
     <section>
-      {thoughtList.reverse().map((task) => (
+      {thoughtList.map((task) => (
+        // eslint-disable-next-line no-underscore-dangle
         <div className="thoughtCard" key={task._id}>
-          <h4>{task.description}</h4>
-          <input onChange={() => onTaskCheckChange(task)} type="checkbox" checked={task.isChecked} />
-          <p>{formatRelative(task.date, new Date())}</p>
+          <h4>{task.message}</h4>
+          <p title={moment(task.createdAt).format('DD-MM-YYYY hh:mm:ss')}>{moment(task.createdAt).fromNow()}</p>
         </div>
       ))}
     </section>
